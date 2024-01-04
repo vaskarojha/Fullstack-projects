@@ -97,3 +97,7 @@ button{
 button:hover{
   background-color: antiquewhite;
 }
+
+form h2{
+  text-align: center;
+}
