@@ -1,18 +1,19 @@
 import React, {useState} from 'react'
 
 
-
 function RegisterPage() {
   const [username, setUsername] = useState('');
 const [password, setPassword] = useState('');
 
 async function register(e){
   e.preventDefault()
-  await fetch('http://localhost:4000', {
+  await fetch('http://localhost:4000/register', {
     method:'POST',
     body: JSON.stringify({username, password}),
     headers:{"Content-type": "application/json"}
   })
+  // const data = await response.json()
+  // console.log(data)
 }
 
   return (
