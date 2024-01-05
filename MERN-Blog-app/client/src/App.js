@@ -1,16 +1,17 @@
 import './App.css';
 import {Route, Routes} from "react-router-dom"
-import Post from './components/Post';
-import Header from './components/Header';
-import Login from './components/Login';
+// import Post from './components/Post';
+// import Header from './components/Header';
+// import Login from './components/Login';
 import Layout from './components/Layout';
 import IndexPage from './pages/IndexPage';
 import LoginPage from "./pages/LoignPage"
 import RegisterPage from './pages/RegisterPage';
+import { UserContextProvider } from './contexts/UserContext';
 
 function App() {
   return (
-
+    <UserContextProvider>
     <Routes>
       <Route path='/' element = {<Layout/>}>
         {/* index route */}
@@ -23,7 +24,7 @@ function App() {
         <Route path='/register' element= {<RegisterPage/>}/>
       </Route>
     </Routes>
-
+    </UserContextProvider>
   );
 }
 
