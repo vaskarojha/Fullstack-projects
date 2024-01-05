@@ -3,12 +3,15 @@ import mongoose from "mongoose";
 import cors from 'cors'
 import bcrypt from 'bcryptjs'
 import Jwt from "jsonwebtoken"
+import cookieParser from "cookie-parser";
+
 import User from './models/user.model.js'
- import 'dotenv/config'
+import 'dotenv/config'
 
 const app = express()
 app.use(cors({credentials:true, origin:'http://localhost:3000'}))
 app.use(express.json())
+app.use(cookieParser())
 
 // const DB_NAME = process.env.DB_NAME
 const DB_URL = process.env.DB_URL
@@ -58,7 +61,7 @@ app.post('/login', async (req,res)=>{
         if(!truePassword){
             res.json({"success":false,"message":"Incorrect credentials"}).status(404)
         }
-        const token = Jwt.sign({"id":findUser._id}, process.env.JWT_SECRET)
+        const token = Jwt.sign({"id":findUser._id, "username":findUser.username}, process.env.JWT_SECRET)
         
         res.cookie('token',token)
             .status(200)
@@ -73,6 +76,18 @@ app.post('/login', async (req,res)=>{
     
 })
 
+app.post('/profile', async (req, res)=>{
+    const {token} = req.cookies;
+    Jwt.verify(token, process.env.JWT_SECRET, {}, (err, data)=>{
+        if(err) throw err;
+        res.json(data)
+    }
+)
+})
+
+app.post('/logout',async (req,res)=>{
+    res.cookie('token', '').json({'success':true})
+})
 
 
 
