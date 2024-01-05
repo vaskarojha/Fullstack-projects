@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 function Header() {
-  const [username, setUsername] = useState(null)
+  const [username, setUsername] = useState(null);
   useEffect(()=>{
      fetch('http://localhost:4000/profile', {
-      method:'POST',
       credentials:'include',
     }).then(response =>{
-      response.json().then(userData =>{
+      response.json().then(userData => {
         setUsername(userData.username)
       
       })
     })
-  })
+  }, [])
 
   const logout =async ()=>{
     await fetch('http://localhost:4000/logout', {
       method:'POST',
       credentials:'include',
-      method:'POST',
     });
     setUsername(null)
   }

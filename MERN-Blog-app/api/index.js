@@ -76,16 +76,19 @@ app.post('/login', async (req,res)=>{
     
 })
 
-app.post('/profile', async (req, res)=>{
-    const {token} = req.cookies;
-    Jwt.verify(token, process.env.JWT_SECRET, {}, (err, data)=>{
-        if(err) throw err;
-        res.json(data)
+app.get('/profile', (req, res)=>{
+    console.log('======>', req.cookies)
+    if(!req.cookies.token){
+        throw res.json({"success":false, "message":"no token available"})
+    }
+    const {token} = req.cookies 
+    const data =  Jwt.verify(token, process.env.JWT_SECRET)
+    res.json(data)
+    console.log(data)
     }
 )
-})
 
-app.post('/logout',async (req,res)=>{
+app.post('/logout',(req,res)=>{
     res.cookie('token', '').json({'success':true})
 })
 
