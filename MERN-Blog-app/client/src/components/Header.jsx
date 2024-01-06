@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import { UserContext } from '../contexts/UserContext'
 function Header() {
@@ -10,11 +10,11 @@ function Header() {
       credentials:'include',
     }).then(response =>{
       response.json().then(userData => {
-        setUserInfo(userData.username)
+        setUserInfo(userData)
       
       })
     })
-  }, [])
+  }, [setUserInfo])
 
   const logout =async ()=>{
     await fetch('http://localhost:4000/logout', {
