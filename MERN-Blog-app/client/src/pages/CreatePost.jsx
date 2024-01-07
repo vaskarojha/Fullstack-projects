@@ -19,7 +19,8 @@ function CreatePost() {
     // console.log(files)
     const response = await fetch('http://localhost:4000/post',{
           method:'POST',
-          body:data
+          body:data,
+          credentials:'include'
         }).then(data =>data.json())
         // console.log(response)
         if(response.success){

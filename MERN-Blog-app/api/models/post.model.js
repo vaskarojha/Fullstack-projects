@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const postSchema = new mongoose.Schema({
     title:{
@@ -18,6 +18,10 @@ const postSchema = new mongoose.Schema({
     },
     cover:{
         type:String,
+    },
+    author:{
+        type:mongoose.Types.ObjectId,
+        ref:'User'
     }
 }, {timestamps:true})
 

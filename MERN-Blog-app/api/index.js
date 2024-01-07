@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import mongoose from "mongoose";
 import cors from 'cors'
 import bcrypt from 'bcryptjs'
@@ -104,19 +104,33 @@ app.post('/post', upload.single('files') ,async (req, res)=>{
     const newPath = path+'.'+fileExt
     fs.renameSync(path,newPath)
 
+    const {token} = req.cookies 
+    const data =  Jwt.verify(token, process.env.JWT_SECRET)
+    console.log('jwt===>', data)
+    const userId = data.id
     const {title, summary, content} = req.body
 
     const createdPost = await Post.create({
         title,
         summary,
         content,
-        cover:newPath
+        cover:newPath,
+        author:userId
     })
     res.json({"success":true,
                 createdPost})
 
 })
 
+app.get('/post',async  (req,res)=>{
+
+    const posts = await (Post.find()
+    .populate('author', ['username']))
+    .sort({createdAt: -1})
+    .limit(20)
+    res.json(posts)
+    
+})
 
 
 async function dbConnect(){
