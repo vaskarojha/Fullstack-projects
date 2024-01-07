@@ -4,8 +4,10 @@ import cors from 'cors'
 import bcrypt from 'bcryptjs'
 import Jwt from "jsonwebtoken"
 import cookieParser from "cookie-parser";
-
+import multer from "multer";
+import fs from "fs"
 import User from './models/user.model.js'
+import Post from './models/post.model.js'
 import 'dotenv/config'
 
 const app = express()
@@ -13,6 +15,7 @@ app.use(cors({credentials:true, origin:'http://localhost:3000'}))
 app.use(express.json())
 app.use(cookieParser())
 
+const upload = multer({ dest: 'uploads/' })
 // const DB_NAME = process.env.DB_NAME
 const DB_URL = process.env.DB_URL
 
@@ -77,7 +80,7 @@ app.post('/login', async (req,res)=>{
 })
 
 app.get('/profile', (req, res)=>{
-    console.log('======>', req.cookies)
+    // console.log('======>', req.cookies)
     if(!req.cookies.token){
         throw res.json({"success":false, "message":"no token available"})
     }
@@ -92,6 +95,27 @@ app.post('/logout',(req,res)=>{
     res.cookie('token', '').json({'success':true})
 })
 
+
+app.post('/post', upload.single('files') ,async (req, res)=>{
+    const fileWithExt = req.file.originalname
+    const {path} = req.file
+    const fileAndExt = fileWithExt.split('.')
+    const fileExt = fileAndExt[fileAndExt.length-1]
+    const newPath = path+'.'+fileExt
+    fs.renameSync(path,newPath)
+
+    const {title, summary, content} = req.body
+
+    const createdPost = await Post.create({
+        title,
+        summary,
+        content,
+        cover:newPath
+    })
+    res.json({"success":true,
+                createdPost})
+
+})
 
 
 
