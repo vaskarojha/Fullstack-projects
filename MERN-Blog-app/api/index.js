@@ -6,14 +6,21 @@ import Jwt from "jsonwebtoken"
 import cookieParser from "cookie-parser";
 import multer from "multer";
 import fs from "fs"
+import path from 'path'
 import User from './models/user.model.js'
 import Post from './models/post.model.js'
 import 'dotenv/config'
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
 
 const app = express()
 app.use(cors({credentials:true, origin:'http://localhost:3000'}))
 app.use(express.json())
 app.use(cookieParser())
+const __dirname = path.dirname(__filename);
+app.use('/uploads', express.static(__dirname +'/uploads'))
+
 
 const upload = multer({ dest: 'uploads/' })
 // const DB_NAME = process.env.DB_NAME
@@ -132,6 +139,11 @@ app.get('/post',async  (req,res)=>{
     
 })
 
+app.get('/post/:id', async (req, res)=>{
+    const id = req.params.id
+    const post = await Post.findById(id)
+    res.json({post})
+})
 
 async function dbConnect(){
     try{
