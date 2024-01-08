@@ -145,6 +145,49 @@ app.get('/post/:id', async (req, res)=>{
     res.json({post})
 })
 
+app.put('/post',upload.single('file'), async(req,res)=>{
+    let newPath= ''
+    if(req.file){
+        const fileWithExt = req.file.originalname
+        const {path} = req.file
+        const fileAndExt = fileWithExt.split('.')
+        const fileExt = fileAndExt[fileAndExt.length-1]
+        const newPath = path+'.'+fileExt
+        fs.renameSync(path,newPath)    
+    }
+    const {token}=  req.cookies;
+    const data =  Jwt.verify(token, process.env.JWT_SECRET)
+    console.log('jwt===>', data)
+    const userId = data.id
+    const {id, title, summary, content} = req.body
+
+
+    const postDoc = await Post.findById(id);
+    
+    if(JSON.stringify(postDoc.author) !== JSON.stringify(userId)){
+        res.json({"message":"invalid user id..",
+                userId,
+            'author':postDoc.author})
+    }
+
+    await postDoc.update({
+        title,
+        summary,
+        content,
+        cover:newPath?newPath:postDoc.cover
+    })
+    res.json({'message':'ok'})
+    // const createdPost = await Post.create({
+    //     title,
+    //     summary,
+    //     content,
+    //     cover:newPath,
+    //     author:userId
+    // })
+    // res.json({"success":true,
+    //             createdPost})
+})
+
 async function dbConnect(){
     try{
          const conn = await mongoose.connect(DB_URL)
