@@ -17,7 +17,7 @@ function CreatePost() {
     data.set('files', files[0])
     e.preventDefault()
     // console.log(files)
-    const response = await fetch('http://localhost:4000/post',{
+    const response = await fetch('http://localhost:4000/post/create',{
           method:'POST',
           body:data,
           credentials:'include'

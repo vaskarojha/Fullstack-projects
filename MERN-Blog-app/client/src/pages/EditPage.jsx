@@ -12,7 +12,7 @@ const {id} = useParams()
   const [redirect, setRedirect] =  useState(false)
 
         useEffect(()=>{
-                fetch('http://localhost:4000/post/'+id)
+                fetch('http://localhost:4000/post/getPost/'+id)
                 .then(response =>response.json())
                 .then(currentPost=> {
                         console.log(currentPost)
@@ -34,7 +34,7 @@ const {id} = useParams()
                 if(files?.[0]){
                         data.set('file', files?.[0])
                 }
-                const apiResponse = fetch('http://localhost:4000/post',{
+                const apiResponse = fetch('http://localhost:4000/post/updatePost',{
                         method:'PUT',
                         body:data,
                         credentials:'include'

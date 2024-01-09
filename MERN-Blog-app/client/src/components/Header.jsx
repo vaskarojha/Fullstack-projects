@@ -6,7 +6,7 @@ function Header() {
   
   // const [username, setUsername] = useState(null);
   useEffect(()=>{
-     fetch('http://localhost:4000/profile', {
+     fetch('http://localhost:4000/user/profile', {
       credentials:'include',
     }).then(response =>{
       response.json().then(userData => {
@@ -17,7 +17,7 @@ function Header() {
   }, [setUserInfo])
 
   const logout =async ()=>{
-    await fetch('http://localhost:4000/logout', {
+    await fetch('http://localhost:4000/user/logout', {
       method:'POST',
       credentials:'include',
     });
