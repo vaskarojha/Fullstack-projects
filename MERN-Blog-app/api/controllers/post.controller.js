@@ -86,5 +86,10 @@ export const updatePost = async(req,res)=>{
     //             createdPost})
 }
 
-
+export const deletePost = async (req, res)=>{
+    console.log('deletepost controller')
+    const {id}= req.params
+    await Post.findByIdAndDelete(id)
+    res.json({"success":true, "message":"Post deleted!"})
+}
 
