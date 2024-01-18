@@ -14,6 +14,7 @@ function Navbar() {
         />
     <Link href = '/'>Dashboard</Link>
     <Link href='/tickets'>Tickets</Link>
+    <Link href='/tickets/create'>Create Ticket</Link>
     </nav>
   )
 }
