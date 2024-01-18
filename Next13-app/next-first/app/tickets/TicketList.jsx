@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
  //fetch the data
     async function getTicket(){
+        //making delay
+        await new Promise(resolve =>setTimeout(resolve, 3000))
         const res = await fetch('http://localhost:4000/tickets',{
             next:{
                 revalidate: 10 // check for the change in every 10 seconds otherwise it uses the existing data from cache memory.
