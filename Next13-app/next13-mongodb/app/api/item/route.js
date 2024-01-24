@@ -18,6 +18,7 @@ export async function GET(){
 
 export async function DELETE(request){
     const id = request.nextUrl.searchParams.get('id')
+    await dbConnect();
     await Item.findByIdAndDelete(id)
-    return NextResponse.json({message: "Item deleted!!"})
+    return NextResponse.json({message: "Item deleted!!"}, {status:200})
 }

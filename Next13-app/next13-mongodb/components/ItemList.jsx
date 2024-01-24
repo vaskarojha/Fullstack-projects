@@ -21,14 +21,14 @@ export default async function ItemList(){
     return (
         <>
             {items.map((item) =>(
-                <div className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start">
+                <div className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start" key={item._id}>
                 <div>
                     <h2 className="font-bold text-2xl">{item.title}</h2>
                     <div>{item.description}</div>
                 </div>
 
-                <div className="flex gap-2">
-                    <RemoveButton/>
+                <div className="flex gap-2" key={item._id}>
+                    <RemoveButton id = {item._id}/>
                     <Link href = {`/editItem/${item._id}`}>
                         <HiPencilAlt size = {24}/>
                     </Link>
