@@ -1,8 +1,23 @@
-export default function EditItem(){
-    return <form className="flex flex-col gap-3">
-        <h3 className="mx-auto font-bold text-2xl">Edit item:</h3>
-        <input className="border border-slate-500 px-8 py-2" type="text" placeholder="Title" />
-        <input className="border border-slate-500 px-8 py-2" type="textarea" placeholder="Description" />
-        <button className="bg-green-800 py-3 text-white font-bold w-1/2 mx-auto" >Add Topic</button>
-    </form>
+import EditItem from "@/components/EditItem";
+
+const getItemById = async(id)=>{
+    try{
+        const response = await fetch(`http://localhost:3000/api/item/${id}`, {
+            cache:"no-store"
+        })
+
+        if(!response.ok){
+            throw new Error("Failed to fetch data!!")
+        }
+        return response.json()
+    }catch(err){
+        console.log("Error on fetching data!!")
+    }
+    
+}
+export default async function EditItemPage({params}){
+    const {id} = params;
+    const {item}= await getItemById(id)
+    const {title, description}= item
+    return <EditItem id= {id} title = {title} description = {description}/>
 }
