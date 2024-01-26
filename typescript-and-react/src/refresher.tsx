@@ -1,0 +1,146 @@
+let var1 = 'hello' // var1 have to be only string datatype
+let num1 = 10 // num1 datatype can be only number
+
+let var2 :string = 'Hi' // another way of creating string variable
+let num2 :number= 11 // another way of creating number
+
+let bool1 : boolean 
+
+let alfaNum : string | number // '|' symbole is or operator it means the alfanum variable can be only either string or number
+
+
+// Array
+
+let myArray= ["item1", "item2", "item3"]
+myArray.push("item4")
+
+// myArray.push(1) => this will give error because by default myArray accepts string items only
+
+let myStringArray : string[]
+let myNumberArray : number[]
+
+let stringOrNumberArray : (string | number)[] // array that accepts string or number only
+
+// objects
+//  While creating object, TS automatical takes the initially used  variable data type
+let user={          
+    username:"user1",
+    userId: 123,
+    isActive: false
+}
+
+let userObject :{
+    username:string,
+    userID: number,
+    isActive:boolean
+}
+
+userObject= {
+    username:"user1",
+    userID:123,
+    isActive: true
+    //passowrd : "pass1" // It throws an error because it was not defined while creating userObject 
+}
+
+let userObject2 :{
+    username:string,
+    userID: number,
+    isActive:boolean,
+    password?: string    // "?" symbole is used for conditional variable 
+}
+
+userObject2={
+    username: "username2",
+    userID: 123,
+    isActive:true,
+    password: "pass1"    // IT IS OPTIONAL 
+}
+
+userObject2={
+    username: "username2",
+    userID: 123,
+    isActive:true,
+    // password: "pass1"  // IT IS OPTIONAL 
+}
+
+
+//ANY
+
+let varAny ;
+varAny = 11
+varAny = 'abc'
+varAny = true
+varAny = {}
+varAny = []
+
+// function
+
+let myFun  =()=>{                    //  void  function, returns nothing
+    console.log("Hello world!!")
+}
+            //function param d-type          //return d-type
+let myFunc2 = (num11 :number, num12: number) :number=>{
+    return num11+num12
+}
+
+myFunc2(1,1)
+
+
+let myFunc3 = (var1: string) :void=>{
+    var1.toUpperCase()
+}
+
+
+//  adding optional paramater in function
+
+let myFunc4 = (num1:number, num2:number, num3?: number):number =>{
+    return num1+num2
+}
+
+// obj as paramater
+let func5 = (user:{username:string, userId : number, isActive: true, password?:string})=>{
+    user.userId
+}
+
+//type aliases
+type UserType ={
+    username: string,
+    userId :number,
+    isActive: boolean,
+    password?:string
+}
+
+const user11:UserType = {
+    username: 'user11',
+    userId: 123,
+    isActive: true,
+    password: "pass2"
+}
+
+let myFunc6 = (user1:UserType)=>{
+    user1.username
+    user1.userId,
+    user1.isActive
+}
+
+let myFunc7 = (user1:UserType)=>{
+    user1.username
+    user1.userId,
+    user1.isActive,
+    user1.password
+}
+
+// function type
+type func1 = (a: string, b: string) => void
+
+type func2 = (a:number, b:string) => string
+
+
+
+
+
+
+
+
+
+
