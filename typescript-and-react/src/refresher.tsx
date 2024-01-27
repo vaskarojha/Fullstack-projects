@@ -136,6 +136,78 @@ type func1 = (a: string, b: string) => void
 type func2 = (a:number, b:string) => string
 
 
+//Interface
+
+interface IUser{
+    username: string,
+    isActive:boolean
+}
+
+
+//Extends all the property of IUser Interface, and this is major difference between type and interface
+interface IEmployee extends IUser{
+    employeeId : string
+}
+
+//creating emp1 object using IEmployee data type
+const emp1 :IEmployee={
+    username:"user1",
+    isActive:true,
+    employeeId:"123"
+}
+
+//creating user1 object using IUser employee
+const user1:IUser={
+    username: "user1",
+    isActive: false
+}
+
+//Generics
+
+interface author{
+    name: string,
+    nationality: string
+}
+
+interface book<author>{
+    title:string,
+    pages:number,
+    pubish:string
+    author:author
+}
+
+const book1 = {
+    title: "title1",
+    pages: 101,
+    pubish: "date",
+    author: {
+        name: "name1",
+        nationality:"nationality"
+    }
+}
+
+interface ITest1<T> {
+    key1: string,
+    key2:number,
+    key3: T[]
+}
+
+const Test11 :ITest1<number>={
+    key1: "abc",
+    key2: 123,
+    key3:[1,2,3,4]
+}
+
+const Test22 :ITest1<string>={
+    key1:"def",
+    key2:456,
+    key3:["a", "b", "c"]
+}
+
+
+
+
+
 
 
 
