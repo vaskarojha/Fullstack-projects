@@ -205,6 +205,44 @@ const Test22 :ITest1<string>={
 }
 
 
+// more 
+let userAny: any // this turns off the typescript variable check
+let varUnknown : unknown // if the variable type couldnot determinde initially.
+
+
+interface IUser {
+    userId: number,
+    name: string,
+    age:number,
+    image: string
+}
+
+interface IAdmin extends IUser{
+    token:string,
+    addNewUser:()=> void
+}
+
+function isAdminUser(object:unknown) :object is IAdmin{
+    if(object !== null && typeof object === "object"){
+        return "token" in object
+    }
+    return false
+}
+
+async  function fetchUser (){
+    const response = await fetch("some url");
+
+    // not a good practice
+    const someUser : IUser = await response.json();
+
+    // a better practice
+    const someUser1 :unknown = await response.json()
+
+    if (isAdminUser(someUser1)){
+        someUser1.userId
+    }
+
+}
 
 
 
