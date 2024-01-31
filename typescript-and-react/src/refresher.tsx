@@ -245,8 +245,84 @@ async  function fetchUser (){
 }
 
 
+// More on generics
+
+function getFirstElement(array:number[]){
+    return array[0]
+}
+
+const number = [1,2,3]
+getFirstElement(number)
+
+const strings = ['a','b']
+// getFirstElement(strings)  => this gives an error because it accepts only the numbers array as paramater
+
+function getFirstElement2<ElementType>(array:ElementType[]){
+    return array[0]
+}
+const number2 = [1,2,3]
+getFirstElement2(number)
+
+const string2 = ['a','b'] //
+getFirstElement2(strings)
+
+//the generic values can be mannually be passed
+getFirstElement2<string>(strings)
 
 
+//Example with type
+
+type ApiResponse<Data> ={
+    data : Data
+    isError:boolean
+}
+
+const response: ApiResponse <{name:string, age: number}>= {
+    data:{
+        name: 'name1',
+        age: 28
+    },
+    isError:false
+}
+
+type UserResponse ={
+    name:string
+    age:number
+}
+type BlogResponse ={
+    title:string
+    blogId:number
+}
+
+const response2: ApiResponse <UserResponse>= {
+    data:{
+        name: 'name1',
+        age: 28
+    },
+    isError:false
+}
+
+const response3:ApiResponse<BlogResponse>={
+    data:{
+        title:'abc',
+        blogId:123
+    },
+    isError:false
+}
+
+//generics with extends
+
+type ApiResponse2 <Data extends object>= {
+    data: Data,
+    isError :boolean
+}
+
+const response4:ApiResponse2<{name:string}> ={
+    data: {
+        name:'abc'
+    },
+    isError:false
+}
 
 
 
