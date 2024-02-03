@@ -2,16 +2,23 @@
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
-import {axios} from "axios";
+import axios from "axios";
 
 export default function LoginPage(){
+    const router = useRouter()
     const [user, setUser]= React.useState({
         email:"",
         password: "",
     })
 
-    const onSignup = async ()=>{
-
+    const onLogin = async ()=>{
+        try{
+            const response = await axios.post('/api/users/login', user);
+            console.log("login successfull:",response.data)
+            router.push('/profile')
+        }catch(error:any){
+            console.log(error.message)
+        }
     }
 
     return (
@@ -26,7 +33,7 @@ export default function LoginPage(){
             <input className="p-2 bg-blue-100" type="password" id="password" onChange={(e)=>{
                 setUser({...user, password:e.target.value})
             }}/>
-            <button onClick={onSignup} className="p-2 bg-green-300 my-3">Signup</button>
+            <button onClick={onLogin} className="p-2 bg-green-300 my-3">Signup</button>
             
             <Link href="/signup">Register</Link>
         </div>

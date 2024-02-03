@@ -28,6 +28,6 @@ const userSchema = new mongoose.Schema({
     verifyTokenExpiry: Date
 })
 
-const User = mongoose.models.users || mongoose.model("nextUser", userSchema);
+const User = mongoose.model.nextUsers || mongoose.model("nextUser", userSchema);
 
 export default User;

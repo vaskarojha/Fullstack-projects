@@ -31,7 +31,7 @@ export async function POST(request:NextRequest){
             email,
             password:encryptPassword
         })
-
+        console.log("new user======>", newUser)
         const createdUser = await newUser.save()
         console.log(createdUser)
         
