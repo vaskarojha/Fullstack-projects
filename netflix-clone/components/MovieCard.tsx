@@ -1,6 +1,7 @@
 import React from "react";
 import { BsFillPlayFill } from "react-icons/bs";
 import FavoritesButton from "./FavoriteButton";
+import { useRouter } from "next/router";
 
 interface MovieCardProps{
     data:Record<string,any>,
@@ -8,6 +9,7 @@ interface MovieCardProps{
 }
 
 const MovieCard:React.FC<MovieCardProps>=({data})=>{
+    const router = useRouter()
     return (
         <div className="group bg-zinc-900 col-span relative h-[12vw]">
             <img className="cursor-pointer object-cover transition duration shadow-xl rounded-md group-hover:opacity-90 sm:group-hoveropacity-0 w-full h-12vw" src={data.thumbnailUrl} alt="Thumbnail" />     
@@ -18,8 +20,7 @@ const MovieCard:React.FC<MovieCardProps>=({data})=>{
                 <div className="flex flex-row items-center gap-3">
                     <div className="cursor-pointer w-6 h-6 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:g-neutral-300" 
 
-                    onClick={()=>{    
-                    }}>
+                    onClick={()=>(router.push(`/watch/${data?.id}`))}>
                         <BsFillPlayFill size={30}/>
 
                     </div>
